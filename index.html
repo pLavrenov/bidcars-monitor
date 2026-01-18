@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidCars панель</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <header>
+        <h1>BidCars панель</h1>
+        <p>Загрузите данные по нескольким ссылкам и отметьте подходящие авто.</p>
+    </header>
+    <main>
+        <section class="panel">
+            <form id="search-form">
+                <label for="urls">Ссылки (по одной на строку)</label>
+                <textarea id="urls" name="urls" placeholder="https://bid.cars/app/search/request?..." spellcheck="false"></textarea>
+                <div class="controls">
+                    <div>
+                        <input id="max-pages" name="max-pages" type="number" min="1" max="200" value="50">
+                    </div>
+                    <button type="submit" id="load-button">Загрузить</button>
+                    <div class="secondary-actions">
+                        <button type="button" id="save-sources">Сохранить ссылки</button>
+                        <button type="button" id="use-sources">Вставить сохраненные</button>
+                    </div>
+                    <span class="status" id="status">Ожидание...</span>
+                </div>
+            </form>
+            <div class="saved-sources">
+                <h3>Сохраненные источники</h3>
+                <div class="saved-sources-list" id="saved-sources"></div>
+            </div>
+        </section>
+
+        <section id="results"></section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
