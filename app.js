@@ -25,8 +25,6 @@ const storageVotesKey = 'bidcars-votes-v1';
             }
 
             setLoading(true, 'Загрузка...');
-            saveSourcesToStore(urls);
-            renderSavedSources();
 
             try {
                 const sources = [];
