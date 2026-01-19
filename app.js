@@ -556,7 +556,12 @@ const storageVotesKey = 'bidcars-votes-v1';
                 }
                 const $actions = $('<div>').addClass('actions');
 
-                const $addButton = $('<button>').attr('type', 'button').text('Вставить')
+                const $selectButton = $('<button>').attr('type', 'button').text('Выбрать')
+                    .on('click', () => {
+                        $urlsInput.val(url);
+                    });
+
+                const $addButton = $('<button>').attr('type', 'button').text('+')
                     .on('click', () => {
                         const current = getUrlsFromTextarea();
                         if (!current.includes(url)) {
@@ -565,10 +570,16 @@ const storageVotesKey = 'bidcars-votes-v1';
                         }
                     });
 
+                const $removeFromListButton = $('<button>').attr('type', 'button').text('-')
+                    .on('click', () => {
+                        const current = getUrlsFromTextarea().filter((item) => item !== url);
+                        $urlsInput.val(current.join('\n'));
+                    });
+
                 const $removeButton = $('<button>').attr('type', 'button').text('Удалить')
                     .on('click', () => removeSource(url));
 
-                $actions.append($addButton, $removeButton);
+                $actions.append($selectButton, $addButton, $removeFromListButton, $removeButton);
                 $row.append($badges, $actions);
                 $savedSources.append($row);
             });
