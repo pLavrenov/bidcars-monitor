@@ -279,9 +279,9 @@ const storageVotesKey = 'bidcars-votes-v1';
             const link = buildBidCarsLink(item) || pickFirst(item, ['url', 'link', 'auction_url', 'vehicle_url']);
 
             const details = [];
-            if (year) details.push(`Год: ${year}`);
-            if (make) details.push(`Марка: ${make}`);
-            if (model) details.push(`Модель: ${model}`);
+            // if (year) details.push(`Год: ${year}`);
+            // if (make) details.push(`Марка: ${make}`);
+            // if (model) details.push(`Модель: ${model}`);
 
             const vin = pickFirst(item, ['vin', 'vin_code']);
             const odometer = pickFirst(item, ['odometer', 'mileage', 'odometer_value']);
