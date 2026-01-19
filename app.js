@@ -577,9 +577,18 @@ const storageVotesKey = 'bidcars-votes-v1';
                     });
 
                 const $removeButton = $('<button>').attr('type', 'button').text('Удалить')
-                    .on('click', () => removeSource(url));
+                    .on('click', () => {
+                        if (window.confirm('Удалить источник из сохраненных?')) {
+                            removeSource(url);
+                        }
+                    });
 
-                $actions.append($selectButton, $addButton, $removeFromListButton, $removeButton);
+                const $goButton = $('<button>').attr('type', 'button').text('Перейти')
+                    .on('click', () => {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                    });
+
+                $actions.append($selectButton, $addButton, $removeFromListButton, $removeButton, $goButton);
                 $row.append($badges, $actions);
                 $savedSources.append($row);
             });
