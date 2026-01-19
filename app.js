@@ -340,10 +340,10 @@ const storageVotesKey = 'bidcars-votes-v1';
         function parseTitleOrTag(item) {
             const result = { year: null, make: null, model: null };
 
-            const tag = pickFirst(item, ['tag']);
-            if (tag && typeof tag === 'string') {
-                const parts = tag.split('-');
-                if (parts.length >= 3 && /^\\d{4}$/.test(parts[0])) {
+            const name = pickFirst(item, ['name', 'name_long', 'title']);
+            if (name && typeof name === 'string') {
+                const parts = name.split(',')[0].split(' ');
+                if (parts.length >= 3) {
                     result.year = parts[0];
                     result.make = parts[1];
                     result.model = parts[2];
@@ -351,13 +351,14 @@ const storageVotesKey = 'bidcars-votes-v1';
                 }
             }
 
-            const name = pickFirst(item, ['name', 'name_long', 'title']);
-            if (name && typeof name === 'string') {
-                const match = name.match(/^(\\d{4})\\s+([^,]+?)\\s+([^,]+?)(?:,|$)/);
-                if (match) {
-                    result.year = match[1];
-                    result.make = match[2].trim();
-                    result.model = match[3].trim();
+            const tag = pickFirst(item, ['tag']);
+            if (tag && typeof tag === 'string') {
+                const parts = tag.split('-');
+                if (parts.length >= 3) {
+                    result.year = parts[0];
+                    result.make = parts[1];
+                    result.model = parts[2];
+                    return result;
                 }
             }
 
