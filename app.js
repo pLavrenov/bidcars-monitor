@@ -92,7 +92,7 @@ const storageVotesKey = 'bidcars-votes-v1';
 
         function getMaxPages() {
             const value = Number($maxPagesInput.val());
-            return Number.isFinite(value) && value > 0 ? value : 50;
+            return Number.isFinite(value) && value > 0 ? value : 5;
         }
 
         function setLoading(isLoading, text) {
