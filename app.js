@@ -61,6 +61,11 @@ const storageVotesKey = 'bidcars-votes-v1';
             }
             $urlsInput.val(savedSources.join('\n'));
             setStatus('Ссылки вставлены.');
+            renderSavedSources();
+        });
+
+        $urlsInput.on('input', () => {
+            renderSavedSources();
         });
 
         function getUrlsFromTextarea() {
@@ -553,25 +558,32 @@ const storageVotesKey = 'bidcars-votes-v1';
                     });
                 }
                 const $actions = $('<div>').addClass('actions');
+                const currentUrls = getUrlsFromTextarea();
+                const isInList = currentUrls.includes(url);
 
                 const $selectButton = $('<button>').attr('type', 'button').text('Выбрать')
                     .on('click', () => {
                         $urlsInput.val(url);
+                        renderSavedSources();
                     });
 
                 const $addButton = $('<button>').attr('type', 'button').text('+')
+                    .prop('disabled', isInList)
                     .on('click', () => {
                         const current = getUrlsFromTextarea();
                         if (!current.includes(url)) {
                             current.push(url);
                             $urlsInput.val(current.join('\n'));
+                            renderSavedSources();
                         }
                     });
 
                 const $removeFromListButton = $('<button>').attr('type', 'button').text('-')
+                    .prop('disabled', !isInList)
                     .on('click', () => {
                         const current = getUrlsFromTextarea().filter((item) => item !== url);
                         $urlsInput.val(current.join('\n'));
+                        renderSavedSources();
                     });
 
                 const $removeButton = $('<button>').attr('type', 'button').text('Удалить')
