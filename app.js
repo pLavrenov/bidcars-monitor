@@ -1,5 +1,6 @@
 const storageVotesKey = 'bidcars-votes-v1';
         const storageSourcesKey = 'bidcars-sources-v1';
+        const storageCommentsKey = 'bidcars-comments-v1';
 
         const $form = $('#search-form');
         const $urlsInput = $('#urls');
@@ -13,6 +14,7 @@ const storageVotesKey = 'bidcars-votes-v1';
 
         let votes = loadVotes();
         let savedSources = loadSources();
+        let comments = loadComments();
 
         renderSavedSources();
 
@@ -191,6 +193,11 @@ const storageVotesKey = 'bidcars-votes-v1';
                 $imageWrap.append($badges);
             }
 
+            const commentKey = commentKeyFromVin(meta.vin, key);
+            const $commentWrap = $('<div>').addClass('badges-bottom');
+            $commentWrap.append(buildCommentSection(commentKey));
+            $imageWrap.append($commentWrap);
+
             const $title = $('<h3>');
             if (meta.link) {
                 const $link = $('<a>')
@@ -265,6 +272,64 @@ const storageVotesKey = 'bidcars-votes-v1';
                 $card.find('.actions button').eq(0).toggleClass('is-active', vote === 'up');
                 $card.find('.actions button').eq(1).toggleClass('is-active', vote === 'down');
             });
+        }
+
+        function commentKeyFromVin(vin, fallbackKey) {
+            if (vin) {
+                return `vin::${String(vin).toLowerCase()}`;
+            }
+            return fallbackKey;
+        }
+
+        function buildCommentSection(commentKey) {
+            const current = getCommentValue(commentKey);
+            const $badge = $('<div>').addClass('comment-badge');
+            if (current) {
+                $badge.append($('<span>').text(current));
+            }
+            const $editButton = $('<button>').attr('type', 'button').text('✏️')
+                .on('click', () => {
+                    showCommentEditor($badge, commentKey, current);
+                });
+            $badge.append($editButton);
+            return $badge;
+        }
+
+        function showCommentEditor($container, commentKey, initialValue) {
+            const $editor = $('<div>').addClass('comment-editor');
+            const $input = $('<input>').attr('type', 'text').val(initialValue || '');
+            const $saveButton = $('<button>').attr('type', 'button').text('💾');
+            $saveButton.on('click', () => {
+                const value = $input.val().trim();
+                if (value) {
+                    comments[commentKey] = value;
+                } else {
+                    delete comments[commentKey];
+                }
+                saveComments(comments);
+                updateCommentUI(commentKey);
+            });
+            $editor.append($input, $saveButton);
+            $container.replaceWith($editor);
+            $input.trigger('focus');
+        }
+
+        function updateCommentUI(commentKey) {
+            const $cards = $(`[data-key=\"${CSS.escape(commentKey)}\"]`);
+            $cards.each(function () {
+                const $card = $(this);
+                const $existing = $card.find('.comment-badge, .comment-editor').first();
+                const $newWrap = buildCommentSection(commentKey);
+                if ($existing.length) {
+                    $existing.replaceWith($newWrap);
+                } else {
+                    $card.prepend($newWrap);
+                }
+            });
+        }
+
+        function getCommentValue(commentKey) {
+            return comments[commentKey] || '';
         }
 
         function extractItemMeta(item, sourceUrl) {
@@ -513,6 +578,19 @@ const storageVotesKey = 'bidcars-votes-v1';
 
         function saveVotes(data) {
             localStorage.setItem(storageVotesKey, JSON.stringify(data));
+        }
+
+        function loadComments() {
+            try {
+                const stored = localStorage.getItem(storageCommentsKey);
+                return stored ? JSON.parse(stored) : {};
+            } catch (error) {
+                return {};
+            }
+        }
+
+        function saveComments(data) {
+            localStorage.setItem(storageCommentsKey, JSON.stringify(data));
         }
 
         function loadSources() {

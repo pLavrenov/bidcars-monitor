@@ -137,6 +137,15 @@
             flex-wrap: wrap;
             gap: 6px;
         }
+.card .badges-bottom {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
         .card .badge {
             background: rgba(17, 24, 39, 0.85);
             color: #fff;
@@ -153,6 +162,88 @@
         }
         .card .badge.is-red {
             background: rgba(239, 68, 68, 0.9);
+        }
+.card .comment-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: #f3f4f6;
+    color: #111827;
+    font-size: 12px;
+    border: 1px solid #e5e7eb;
+    max-width: 100%;
+    word-break: break-word;
+}
+.card .comment-badge button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 14px;
+}
+.card .comment-editor {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.card .comment-editor input {
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 12px;
+}
+.card .comment-editor button {
+    background: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+}
+        .card .comment-badge {
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            background: #f3f4f6;
+            color: #111827;
+            font-size: 12px;
+            border: 1px solid #e5e7eb;
+            max-width: 100%;
+            word-break: break-word;
+        }
+        .card .comment-badge button {
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .card .comment-editor {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .card .comment-editor input {
+            flex: 1;
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 12px;
+        }
+        .card .comment-editor button {
+            background: #111827;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 12px;
         }
         .card h3 {
             margin: 0;
